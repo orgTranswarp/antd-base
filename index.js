@@ -11,9 +11,11 @@ import Table from './table/table';
 import 'babel-polyfill';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import App from './sliceList/containers/App';
+
 import configureStore from './sliceList/store/configureStore';
 
+/*
+import App from './sliceList/containers/App';
 const store = configureStore();
 
 render(
@@ -21,12 +23,10 @@ render(
     <App />
   </Provider>,
   document.getElementById('root')
-);
+);*/
 
 
-/*
 
-/*
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -77,11 +77,13 @@ class App extends React.Component {
       console.log(current, pageSize);
     }
 
+    const testData = [{a: 2}, {b:3}];
+
     return (
       <div style={{ width: 700, margin: '100px auto' }}>
         <DatePicker onChange={value => this.handleChange(value)} />
         <div style={{ marginTop: 20 }}>当前日期：{this.state.date.toString()}</div>
-        <Table />
+        <Table testData ={testData} />
 
         <Pagination onPagination={this.onPagination.bind(this)} defaultCurrent={this.state.pageNumber} total={50} />
 
@@ -90,6 +92,4 @@ class App extends React.Component {
   }
 }
 
-
 ReactDOM.render(<App />, document.getElementById('root'));
-*/

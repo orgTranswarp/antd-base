@@ -5,7 +5,7 @@ export const RECEIVE_POSTS = 'RECEIVE_POSTS';
 export const NAVIGATE_TO = 'NAVIGATE_TO';
 
 const data = require('./../../responses/data.json');
-console.log(data);
+
 export function navigateTo(pageNumber){
   return {
     pageNumber,
@@ -35,7 +35,7 @@ function fetchPosts(pageNumber) {
 
   return dispatch => {
     // dispatch(requestPosts(pageNumber));
-    // return fetch(URL)
+    // return fetch(URL, {credentials: 'include'})
       // .then(response => response.data)
       // .then(json => dispatch(receivePosts(pageNumber, json)));
 
