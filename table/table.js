@@ -20,12 +20,16 @@ const columns = [{
   title: '姓名',
   dataIndex: 'name',
   key: 'name',
-  render: text => <a href="#">{text}</a>
+  render: text => <a href="#">{text}</a>,
+  sorter: (a, b) => a.name.slice(2) - b.name.slice(2)
 }, {
   title: '年龄',
   dataIndex: 'age',
   key: 'age',
-  sorter: (a, b) => a.age - b.age
+  sorter: (a, b) => {
+    console.log(a, b, 'in sorter---.');
+    return a.age - b.age;
+  }
 }, {
   title: '住址',
   dataIndex: 'address',
@@ -79,6 +83,8 @@ class SliceTable extends React.Component {
     const onShowSizeChange = (current, pageSize) => {
       console.log(current, pageSize);
     }
+
+    const { testData } = this.props;
 
     return (
         <Table onChange={onChange} rowSelection={rowSelection} dataSource={dataSource} columns={columns} />
