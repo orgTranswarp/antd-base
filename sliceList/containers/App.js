@@ -22,6 +22,7 @@ class App extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.selectedReddit.pageNumber !== this.props.selectedReddit.pageNumber) {
       const { dispatch, selectedReddit } = nextProps;
+      console.log('inside componentWillReceiveProps');
       dispatch(fetchPostsIfNeeded(selectedReddit.pageNumber));
     }
   }

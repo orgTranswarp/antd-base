@@ -14,7 +14,7 @@ import { Provider } from 'react-redux';
 
 import configureStore from './sliceList/store/configureStore';
 
-/*
+
 import App from './sliceList/containers/App';
 const store = configureStore();
 
@@ -23,10 +23,10 @@ render(
     <App />
   </Provider>,
   document.getElementById('root')
-);*/
+);
 
 
-
+/*
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -62,17 +62,6 @@ class App extends React.Component {
 
     const hasSelected = selectedRowKeys.length > 0;
 
-    // const rowSelection = {
-    //   onChange: (selectedRowKeys, selectedRows) => {console.log('onChange;')
-    //     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-    //   },
-    //   // on fire twice when first load
-    //XXXXX
-    //   getCheckboxProps: record => ({
-    //     disabled: record.name === 'Disabled User',    // Column configuration not to be checked
-    //   }),
-    // };
-
     const onShowSizeChange = (current, pageSize) => {
       console.log(current, pageSize);
     }
@@ -93,3 +82,4 @@ class App extends React.Component {
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));
+*/
