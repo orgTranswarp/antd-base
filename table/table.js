@@ -91,5 +91,4 @@ class SliceTable extends React.Component {
     );
   }
 }
-
 export default SliceTable;
