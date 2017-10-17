@@ -4,89 +4,90 @@ import { DatePicker, message, Icon } from 'antd';
 
 import PropTypes from 'prop-types';
 
-
-import Pagination from './pagination/Pagination';
-import Table from './table/table';
+import { TreeSelect } from 'antd';
+const TreeNode = TreeSelect.TreeNode;
 
 import 'babel-polyfill';
 import { render } from 'react-dom';
-import { Provider } from 'react-redux';
 
-import configureStore from './sliceList/store/configureStore';
+const SHOW_ALL = TreeSelect.SHOW_ALL;
+const SHOW_PARENT = TreeSelect.SHOW_PARENT;
+const SHOW_CHILD = TreeSelect.SHOW_CHILD;
 
-/*
-import App from './sliceList/containers/App';
-const store = configureStore();
-
-render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
-);*/
-
-
+const treeData = [{
+  label: 'Node1-label',
+  value: '0-0-val',
+  key: '0-0-key',
+  children: [{
+    label: 'Child Node1',
+    value: '0-0-1-val',
+    key: '0-0-1-key',
+  },{
+    label: 'Child Node2',
+    value: '0-0-2-val',
+    key: '0-0-2-key',
+/*    children: [{
+      label: 'Child Child Node1',//ag1
+      value: '0-0-0-1-val',//ag0
+      key: '0-0-1-key',
+    },{
+      label: 'Child Child Node2',
+      value: '0-0-0-2-val',
+      key: '0-0-2-key',
+    }]*/
+  }],
+}, {
+  label: 'Node2',
+  value: '0-1',
+  key: '0-1',
+  children: [{
+    label: 'Child Node3',
+    value: '0-1-0',
+    key: '0-1-0',
+  }, {
+    label: 'Child Node4',
+    value: '0-1-1',
+    key: '0-1-1',
+  }, {
+    label: 'Child Node5',
+    value: '0-1-2',
+    key: '0-1-2',
+  }],
+}];
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    const defaultCurrent = 2;
-
-    this.state = {
-      date: '',
-      selectedRowKeys: [],  // Check here to configure the default column
-      loading: false,
-      pageNumber: defaultCurrent
-    }
   }
 
-  handleChange(date) {
-    message.info('您选择的日期是: ' + date.toString());
-    this.setState({ date });
+  state = {
+    value: ''
+    // {
+    //   label: 'label',
+    //   value: 'value'
+    // },
   }
-
-  onSelectChange = (selectedRowKeys) => {
-    console.log('selectedRowKeys changed: ', selectedRowKeys);
-    this.setState({ selectedRowKeys });
-  }
-
-  onPagination = (argus) => {
-    console.log('onPagination ', argus, this, this.state.pageNumber );
-    this.setState({pageNumber: argus});
-    console.log('onPagination2 ', argus, this, this.state.pageNumber );
+  onChange = (value) => {
+    this.setState({ value });
   }
 
   render() {
-
-    const { loading, selectedRowKeys } = this.state;
-
-    const hasSelected = selectedRowKeys.length > 0;
-
-    // const rowSelection = {
-    //   onChange: (selectedRowKeys, selectedRows) => {console.log('onChange;')
-    //     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-    //   },
-    //   // on fire twice when first load
-    //XXXXX
-    //   getCheckboxProps: record => ({
-    //     disabled: record.name === 'Disabled User',    // Column configuration not to be checked
-    //   }),
-    // };
-
-    const onShowSizeChange = (current, pageSize) => {
-      console.log(current, pageSize);
-    }
-
-    const testData = [{a: 2}, {b:3}];
+    const tProps = {
+      treeData,
+      value: this.state.value,//.label,
+      onChange: this.onChange,
+      treeCheckable: true,
+      showCheckedStrategy: SHOW_ALL,
+      searchPlaceholder: 'Please select',
+      style: {
+        width: 300,
+      },
+      // labelInValue: true
+    };
 
     return (
       <div style={{ width: 700, margin: '100px auto' }}>
-        <DatePicker onChange={value => this.handleChange(value)} />
-        <div style={{ marginTop: 20 }}>当前日期：{this.state.date.toString()}</div>
-        <Table testData ={testData} />
-
-        <Pagination onPagination={this.onPagination.bind(this)} defaultCurrent={this.state.pageNumber} total={50} />
-
+        <TreeSelect {...tProps} />
       </div>
     );
   }
