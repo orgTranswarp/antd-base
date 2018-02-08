@@ -87,7 +87,7 @@ class App extends React.Component {
     };
 
     return (
-      <div style={{ width: 700, margin: '100px auto' }}>
+      <div style={{ width: 600, margin: '100px auto' }}>
         <TreeSelect {...tProps} />
         <hr />
         <NestedTable />

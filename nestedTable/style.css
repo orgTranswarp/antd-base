@@ -1,3 +1,6 @@
+.nested-table {
+	width: 600px;
+}
 .components-table-demo-nested .ant-table-expanded-row > td:last-child {
   padding: 0 48px 0 8px;
 }
@@ -11,13 +14,13 @@
 }
 
 .components-table-demo-nested .ant-table-expanded-row > td:last-child .ant-table-row td:first-child {
-  padding-left: 0;
+  padding-left: 0; width: 15%;
 }
 
-.ant-table-row-level-0 td:nth-child(2),
-.ant-table-expanded-row .ant-table-row-level-0 td:first-child {
-  width: 297px; padding: 0;
+.ant-table-row-level-0 td:nth-child(2) {
+  width: 28%; padding: 0;
 }
+
 .components-table-demo-nested .ant-table-expanded-row .ant-table-row:last-child td {
   border: none;
 }
@@ -32,4 +35,13 @@
 
 .components-table-demo-nested .ant-table-expanded-row:hover > td {
   background: #fbfbfb;
+}
+
+.table-operation label {
+	padding: 0 10px 0 4px;
+}
+.rename {
+  width: 130px;
+  height: 24;
+  border:'1px #ddd solid';
 }
