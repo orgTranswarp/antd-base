@@ -12,7 +12,6 @@ export default class NestedTable extends React.Component {
     this.expandedRowRender = this.expandedRowRender.bind(this);
     this.renderNormal = this.renderNormal.bind(this);
     this.renderExpanded = this.renderExpanded.bind(this);
-    this.eventsEmitter = this.eventsEmitter.bind(this);
   }
 
   componentDidMount() {
@@ -20,6 +19,12 @@ export default class NestedTable extends React.Component {
     this.setState({
       data: list
     })
+  }
+
+  componentDidUpdate() {
+    const ctn = document.querySelector('.ctn');
+    console.log('componentDidUpdate:', ctn);
+    ctn.onclick = this.eventHandler;
   }
 
   getData() {
@@ -55,7 +60,6 @@ export default class NestedTable extends React.Component {
           can_overwrite: arr[j].can_overwrite
         });
         if (arr[j].can_overwrite === false) {
-          console.log('fuck you:', false)
           can_overwrite = false;
         }
       }
@@ -91,23 +95,11 @@ export default class NestedTable extends React.Component {
               type="radio" 
               id={overrideId} 
               name={record.key} 
-              onChange={(e) => {
-                this.eventsEmitter(e, record, {
-                  isSub: false,
-                  index: 2
-                });
-              }}
             />: 
             <input 
               type="radio" 
               id={overrideId} 
               name={record.key} disabled 
-              onChange={(e) => {
-                this.eventsEmitter(e, record, {
-                  isSub: false,
-                  index: 2
-                });
-              }}
             />
         }
         <label htmlFor={overrideId}>覆盖</label>
@@ -116,12 +108,6 @@ export default class NestedTable extends React.Component {
           type="radio" 
           id={renameId} 
           name={record.key} 
-          onChange={(e) => {
-            this.eventsEmitter(e, record, {
-              isSub: false,
-              index: 2
-            });
-          }}
         />
         <label htmlFor={renameId}>重命名</label>
       </span>
@@ -135,31 +121,27 @@ export default class NestedTable extends React.Component {
       renameId = record.key + '_rename';
 
     return (
-        <span 
-          className="table-operation" 
-          onClick={(e) => {
-            this.eventsEmitter(e, record, {
-              isSub: true
-            });
-          }} 
-        >
+        <span className="table-operation" ref="operation-span">
           <input 
             type="radio" 
             id={skipId} 
             name={record.key} 
             checked={true}
             onChange={_ => _}
-            key="1" 
+            data-config={JSON.stringify({index:1,key:record.key})}
           />
           <label htmlFor={skipId}>跳过</label>
 
           { record.can_overwrite? 
-              <input type="radio" id={overrideId} name={record.key} key="2" />: 
-              <input type="radio" id={overrideId} name={record.key} disabled  key="2" />
+              <input type="radio" id={overrideId} name={record.key} 
+            data-config={JSON.stringify({index:2,key:record.key})} />: 
+              <input type="radio" id={overrideId} name={record.key} 
+            data-config={JSON.stringify({index:2,key:record.key})} disabled />
           }
           <label htmlFor={overrideId}>覆盖</label>
 
-          <input type="radio" id={renameId} name={record.key} key="3" />
+          <input type="radio" id={renameId} name={record.key} 
+            data-config={JSON.stringify({index:3,key:record.key})} />
           <label htmlFor={renameId}>重命名</label>
           
           <input 
@@ -170,21 +152,6 @@ export default class NestedTable extends React.Component {
           />
         </span>
       );
-  }
-
-  eventsEmitter(e, record, {
-    index,
-    isSub
-  } = {
-    index: 0,
-    isSub: false
-  }) {
-
-    if(isSub) {
-      document.querySelector('#' + record.key).disabled = (index === 3 ? false : true);
-    } else {
-
-    }
   }
 
   expandedRowRender = (data) => {
@@ -241,6 +208,9 @@ export default class NestedTable extends React.Component {
           key={key}
           className="components-table-demo-nested"
           expandedRowRender={me.expandedRowRender(children)}
+          onExpand={() => {
+            console.log('on expand here')
+          }}
           columns={columns}
           dataSource={[obj]}
           
@@ -250,8 +220,23 @@ export default class NestedTable extends React.Component {
         />
       });
 
-      return (<div className="ctn">{children}</div>);
+      return (
+        <div className="ctn">{children}</div>);
     }
+  }
+
+  eventHandler(e) {
+    const target = e.target;
+    let config;
+
+    if(target.type === 'radio') {
+      e.stopPropagation();
+      target.checked = true;
+      config = target.getAttribute("data-config");
+      console.log('key: ', target.name, JSON.parse(config));
+      //data-config={'{index:1,key: '+record.key +'}'}
+    }
+
 
   }
 }
