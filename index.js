@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { DatePicker, message, Icon } from 'antd';
 
 import PropTypes from 'prop-types';
+import NestedTable from './nestedTable/NestedTable'
 
 import { TreeSelect } from 'antd';
 const TreeNode = TreeSelect.TreeNode;
@@ -88,6 +89,8 @@ class App extends React.Component {
     return (
       <div style={{ width: 700, margin: '100px auto' }}>
         <TreeSelect {...tProps} />
+        <hr />
+        <NestedTable />
       </div>
     );
   }
